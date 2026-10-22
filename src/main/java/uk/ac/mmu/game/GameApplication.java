@@ -11,7 +11,7 @@ public class GameApplication {
 
 		RedPlayer red = new RedPlayer();
 		BluePlayer blue = new BluePlayer();
-		final int[] rolls = new int[]{12, 10, 12};
+		final int[] rolls = new int[]{6, 5, 5, 3, 1, 6, 6, 6, 3, 3, 2, 1};
 		int turns = 0;
 		int redTurns = 0;
 		int blueTurns = 0;
