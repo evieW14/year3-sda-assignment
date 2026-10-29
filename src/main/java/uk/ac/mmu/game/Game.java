@@ -1,8 +1,10 @@
 package uk.ac.mmu.game;
 
+import java.util.Random;
+
 public class Game {
 
-    private final Dice dice;
+    private final DiceRoller dice;
     private final Player redPlayer;
     private final Player bluePlayer;
 
@@ -10,10 +12,10 @@ public class Game {
 
     private int totalTurns = 0;
 
-    public Game() {
+    public Game(DiceRoller dice) {
+        this.dice = dice;
         Board board = new Board();
 
-        dice = new Dice();
         redPlayer = new Player("RED", board.getRedPositions());
         bluePlayer = new Player("BLUE", board.getBluePositions());
 
