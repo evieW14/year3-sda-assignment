@@ -9,6 +9,7 @@ public class RandomDice implements DiceRoller{
         this.random = random;
     }
 
+    @Override
     public int roll() {
         return random.nextInt(6) + 1;
     }

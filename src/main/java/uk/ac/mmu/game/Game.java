@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Game {
 
-    private final RandomDice dice;
+    private final DiceRoller dice;
     private final Player redPlayer;
     private final Player bluePlayer;
 
@@ -12,11 +12,9 @@ public class Game {
 
     private int turnCount = 0;
 
-    public Game() {
+    public Game(DiceRoller dice) {
+        this.dice = dice;
         Board board = new Board();
-        Random random = new Random();
-        
-        dice = new RandomDice(random);
 
         redPlayer = new Player("RED", board.getRedPositions());
         bluePlayer = new Player("BLUE", board.getBluePositions());
