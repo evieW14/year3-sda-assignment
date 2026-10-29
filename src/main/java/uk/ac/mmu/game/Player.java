@@ -6,6 +6,7 @@ public class Player {
 
     private final String colour;
     private final int[] positions;
+    private int turnCount = 0;
 
     private int currentIndex = HOME_INDEX;
 
@@ -24,6 +25,14 @@ public class Player {
 
     public int getPosition() {
         return positions[currentIndex];
+    }
+
+    public int getTurnCount() {
+        return turnCount;
+    }
+
+    public void incrementTurnCount() {
+        turnCount++;
     }
 
     public void advance(int spaces) {
