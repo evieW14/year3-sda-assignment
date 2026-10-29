@@ -1,6 +1,5 @@
 package uk.ac.mmu.game;
 
-import java.util.Random;
 
 public class Game {
 

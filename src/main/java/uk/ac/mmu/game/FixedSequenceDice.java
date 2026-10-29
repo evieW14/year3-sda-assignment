@@ -12,10 +12,8 @@ public class FixedSequenceDice implements DiceRoller {
 
     @Override
     public int roll() {
-        if(nextIndex >= rolls.size()) {
-            throw new IllegalStateException(
-                    "No more rolls in the fixed sequence"
-            );
+        if (nextIndex >= rolls.size()) {
+            throw new IllegalStateException("No more rolls in the fixed sequence");
         }
         int value = rolls.get(nextIndex);
         nextIndex++;
