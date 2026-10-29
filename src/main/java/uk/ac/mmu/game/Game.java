@@ -8,7 +8,7 @@ public class Game {
 
     private Player currentPlayer;
 
-    private int turnCount = 0;
+    private int totalTurns = 0;
 
     public Game() {
         Board board = new Board();
@@ -38,21 +38,24 @@ public class Game {
         System.out.println("=================================");
 
         if (redPlayer.isAtEnd()) {
-            System.out.printf("Red wins in %d moves%n", turnCount);
+            System.out.printf("Red WINS in %d moves%n", redPlayer.getTurnCount());
         } else {
-            System.out.printf("Blue wins in %d moves%n", turnCount);
+            System.out.printf("Blue WINS in %d moves%n", bluePlayer.getTurnCount());
         }
+
+        System.out.printf("Total Turns: %d%n", totalTurns);
 
         System.out.println("=================================");
     }
 
     private void playTurn() {
 
-        turnCount++;
+        totalTurns++;
+        currentPlayer.incrementTurnCount();
 
         int roll = dice.roll();
 
-        System.out.printf("%n--- Turn %d ---%n", turnCount);
+        System.out.printf("%n--- Turn %d ---%n", totalTurns);
 
         String start = currentPlayer.toString();
 
