@@ -18,7 +18,7 @@ public class Player {
         return currentIndex == HOME_INDEX;
     }
 
-    public boolean isEnd() {
+    public boolean isAtEnd() {
         return currentIndex == END_INDEX;
     }
 
@@ -41,7 +41,7 @@ public class Player {
     @Override
     public String toString() {
         if (isHome()) return "HOME";
-        if (isEnd()) return "END";
+        if (isAtEnd()) return "END";
         else return String.format("Position %d", getPosition());
 
     }
