@@ -17,7 +17,7 @@ public class Game {
         this.endRule = endRule;
         this.hitRule = hitRule;
         this.wormholeRule = wormholeRule;
-        Board board = new Board();
+        TwoPlayerBoard board = new TwoPlayerBoard();
 
         redPlayer = new Player("RED", board.getRedPositions());
         bluePlayer = new Player("BLUE", board.getBluePositions());
