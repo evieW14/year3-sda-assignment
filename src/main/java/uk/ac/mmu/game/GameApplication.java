@@ -17,11 +17,8 @@ public class GameApplication {
 
         HitRule spaceCollide = new SpaceCollide();
         HitRule spaceShare = new SpaceShare();
-        
-        WormholeRule teleportWormholes = new TeleportWormholes(List.of(
-                new Wormhole(4, 9),
-                new Wormhole(19, 23)
-        ));
+
+        WormholeRule teleportWormholes = new TeleportWormholes(List.of(new Wormhole(4, 9), new Wormhole(19, 23)));
         WormholeRule ignoreWormholes = new IgnoreWormholes();
 
         System.out.println("\n========== RANDOM DICE DEMOS ==========");
@@ -56,8 +53,7 @@ public class GameApplication {
 
         // Red lands on position 4 on turn 1 and should be teleported to position 9.
         List<Integer> wormholeRolls = List.of(3, 1, 12, 12, 4);
-        runGame("Fixed | Normal End | Space Share | Teleport Wormholes (4 <-> 9, 19 <-> 23)",
-                new Game(new FixedSequenceDice(wormholeRolls), normalEnd, spaceShare, teleportWormholes));
+        runGame("Fixed | Normal End | Space Share | Teleport Wormholes (4 <-> 9, 19 <-> 23)", new Game(new FixedSequenceDice(wormholeRolls), normalEnd, spaceShare, teleportWormholes));
     }
 
     private static void runGame(String label, Game game) {

@@ -17,10 +17,10 @@ public class Game {
         this.endRule = endRule;
         this.hitRule = hitRule;
         this.wormholeRule = wormholeRule;
-        TwoPlayerBoard board = new TwoPlayerBoard();
+        Board board = new TwoPlayerBoard();
 
-        redPlayer = new Player("RED", board.getRedPositions());
-        bluePlayer = new Player("BLUE", board.getBluePositions());
+        redPlayer = new Player("RED", board.getRedPositions(), board.getHomeIndex(), board.getEndIndex());
+        bluePlayer = new Player("BLUE", board.getBluePositions(),board.getHomeIndex(), board.getEndIndex());
 
         currentPlayer = redPlayer;
     }

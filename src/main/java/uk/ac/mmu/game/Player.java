@@ -1,18 +1,20 @@
 package uk.ac.mmu.game;
 
 public class Player {
-    private static final int HOME_INDEX = 0;
-    private static final int END_INDEX = 24;
-
     private final String colour;
     private final int[] positions;
+    private final int HOME_INDEX;
+    private final int END_INDEX;
     private int turnCount = 0;
+    private int currentIndex;
 
-    private int currentIndex = HOME_INDEX;
-
-    public Player(String colour, int[] positions) {
+    public Player(String colour, int[] positions, int HOME_INDEX, int END_INDEX) {
         this.colour = colour;
         this.positions = positions;
+        this.HOME_INDEX = HOME_INDEX;
+        this.END_INDEX = END_INDEX;
+
+        currentIndex = HOME_INDEX;
     }
 
     public boolean isHome() {

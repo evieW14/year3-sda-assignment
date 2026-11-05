@@ -24,4 +24,14 @@ public class FourPlayerBoard implements Board {
     public int[] getYellowPositions() {
         return yellowPositions;
     }
+
+    @Override
+    public int getHomeIndex() {
+        return HOME_INDEX;
+    }
+
+    @Override
+    public int getEndIndex() {
+        return END_INDEX;
+    }
 }
