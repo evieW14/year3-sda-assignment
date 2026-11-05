@@ -1,5 +1,7 @@
 package uk.ac.mmu.game;
 
+import java.util.List;
+
 public class Player {
     private final String colour;
     private final int[] positions;
@@ -37,14 +39,14 @@ public class Player {
         turnCount++;
     }
 
-    public void advance(int spaces, EndRule endRule, HitRule hitRule, int opponentPosition, WormholeRule wormholeRule) {
+    public void advance(int spaces, EndRule endRule, HitRule hitRule, List<Integer> opponentPositions, WormholeRule wormholeRule) {
         int destinationIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
 
         // WormholeRule and HitRule use BoardPositions as these are shared
         // Indexes are different for players as they have their own sequence of the board.
         int destinationPosition = wormholeRule.teleportToIndex(positions[destinationIndex]);
 
-        if (hitRule.canMove(destinationPosition, opponentPosition)) {
+        if (hitRule.canMove(destinationPosition, opponentPositions)) {
             // currentIndex is an index so need to convert destinationPosition to its index
             currentIndex = getIndexOfPosition(destinationPosition);
         }
