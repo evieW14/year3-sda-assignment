@@ -14,50 +14,40 @@ public class GameApplication {
 
         EndRule normalEnd = new NormalEnd();
         EndRule exactEnd = new ExactEnd();
-
         HitRule spaceCollide = new SpaceCollide();
         HitRule spaceShare = new SpaceShare();
-        
-        WormholeRule teleportWormholes = new TeleportWormholes(List.of(
-                new Wormhole(4, 9),
-                new Wormhole(19, 23)
-        ));
+
+        WormholeRule teleportWormholes = new TeleportWormholes(List.of(new Wormhole(4, 9), new Wormhole(19, 23)));
         WormholeRule ignoreWormholes = new IgnoreWormholes();
+
+        Board twoPlayerBoard = new TwoPlayerBoard();
+        Board fourPlayerBoard = new FourPlayerBoard();
 
         System.out.println("\n========== RANDOM DICE DEMOS ==========");
 
-        // Random, one die: Exact End + Space Share
-        runGame("Random | 1 die | Exact End | Space Share", new Game(new RandomDice(new Random(), 1), exactEnd, spaceShare, ignoreWormholes));
+        runGame("Random | 1 die | 6x6, 4 players | Exact End | Space Share | Ignore Wormholes", new Game(new RandomDice(new Random(), 1), exactEnd, spaceShare, ignoreWormholes, fourPlayerBoard));
 
-        // Random, two dice: Normal End + Space Collide
-        runGame("Random | 2 dice | Normal End | Space Collide", new Game(new RandomDice(new Random(), 2), normalEnd, spaceCollide, ignoreWormholes));
+        runGame("Random | 2 dice | 5x5, 2 players | Normal End | Space Collide | Ignore Wormholes", new Game(new RandomDice(new Random(), 2), normalEnd, spaceCollide, ignoreWormholes, twoPlayerBoard));
 
-        System.out.println("\n========== FIXED RULE DEMOS ==========");
+        System.out.println("\n========== FIXED RULE DEMOS (5x5, 2 players) ==========");
 
-        // These rolls make Red and Blue both attempt to land on position 13.
-        // Under SpaceShare they can share the square; under SpaceCollide Blue stays at Home.
+        // Both players attempt to land on position 13 on their first turn each.
         List<Integer> collisionRolls = List.of(12, 12, 6, 6, 6);
 
-        runGame("Fixed | Normal End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceShare, ignoreWormholes));
+        runGame("Normal End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceShare, ignoreWormholes, twoPlayerBoard));
+        runGame("Normal End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceCollide, ignoreWormholes, twoPlayerBoard));
+        runGame("Exact End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceShare, ignoreWormholes, twoPlayerBoard));
+        runGame("Exact End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceCollide, ignoreWormholes, twoPlayerBoard));
 
-        runGame("Fixed | Normal End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceCollide, ignoreWormholes));
-
-        runGame("Fixed | Exact End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceShare, ignoreWormholes));
-
-        runGame("Fixed | Exact End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceCollide, ignoreWormholes));
-
-        // The roll on turn 17 makes Red overshoot from position 24.
-        // Normal End wins by overshooting; Exact End bounces back and continues.
+        // Red's roll on turn 17 overshoots from position 24.
         List<Integer> overshootRolls = List.of(6, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-        runGame("Fixed | Normal End | Space Share | Overshoot scenario", new Game(new FixedSequenceDice(overshootRolls), normalEnd, spaceShare, ignoreWormholes));
+        runGame("Normal End | Overshoot scenario", new Game(new FixedSequenceDice(overshootRolls), normalEnd, spaceShare, ignoreWormholes, twoPlayerBoard));
+        runGame("Exact End | Bounce-back scenario", new Game(new FixedSequenceDice(overshootRolls), exactEnd, spaceShare, ignoreWormholes, twoPlayerBoard));
 
-        runGame("Fixed | Exact End | Space Share | Bounce-back scenario", new Game(new FixedSequenceDice(overshootRolls), exactEnd, spaceShare, ignoreWormholes));
-
-        // Red lands on position 4 on turn 1 and should be teleported to position 9.
+        // Red lands on position 4 and should be teleported to position 9.
         List<Integer> wormholeRolls = List.of(3, 1, 12, 12, 4);
-        runGame("Fixed | Normal End | Space Share | Teleport Wormholes (4 <-> 9, 19 <-> 23)",
-                new Game(new FixedSequenceDice(wormholeRolls), normalEnd, spaceShare, teleportWormholes));
+        runGame("Normal End | Space Share | Teleport Wormholes (4 <-> 9, 19 <-> 23)", new Game(new FixedSequenceDice(wormholeRolls), normalEnd, spaceShare, teleportWormholes, twoPlayerBoard));
     }
 
     private static void runGame(String label, Game game) {

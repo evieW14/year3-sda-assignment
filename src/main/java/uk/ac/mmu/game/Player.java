@@ -1,18 +1,22 @@
 package uk.ac.mmu.game;
 
-public class Player {
-    private static final int HOME_INDEX = 0;
-    private static final int END_INDEX = 24;
+import java.util.List;
 
+public class Player {
     private final String colour;
     private final int[] positions;
+    private final int HOME_INDEX;
+    private final int END_INDEX;
     private int turnCount = 0;
+    private int currentIndex;
 
-    private int currentIndex = HOME_INDEX;
-
-    public Player(String colour, int[] positions) {
+    public Player(String colour, int[] positions, int HOME_INDEX, int END_INDEX) {
         this.colour = colour;
         this.positions = positions;
+        this.HOME_INDEX = HOME_INDEX;
+        this.END_INDEX = END_INDEX;
+
+        currentIndex = HOME_INDEX;
     }
 
     public boolean isHome() {
@@ -35,14 +39,14 @@ public class Player {
         turnCount++;
     }
 
-    public void advance(int spaces, EndRule endRule, HitRule hitRule, int opponentPosition, WormholeRule wormholeRule) {
+    public void advance(int spaces, EndRule endRule, HitRule hitRule, List<Integer> opponentPositions, WormholeRule wormholeRule) {
         int destinationIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
 
         // WormholeRule and HitRule use BoardPositions as these are shared
         // Indexes are different for players as they have their own sequence of the board.
         int destinationPosition = wormholeRule.teleportToIndex(positions[destinationIndex]);
 
-        if (hitRule.canMove(destinationPosition, opponentPosition)) {
+        if (hitRule.canMove(destinationPosition, opponentPositions)) {
             // currentIndex is an index so need to convert destinationPosition to its index
             currentIndex = getIndexOfPosition(destinationPosition);
         }
