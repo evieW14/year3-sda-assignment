@@ -7,12 +7,14 @@ public class Game {
     private final Player redPlayer;
     private final Player bluePlayer;
     private final EndRule endRule;
+    private final HitRule hitRule;
     private Player currentPlayer;
     private int totalTurns = 0;
 
-    public Game(DiceRoller dice, EndRule endRule) {
+    public Game(DiceRoller dice, EndRule endRule, HitRule hitRule) {
         this.dice = dice;
         this.endRule = endRule;
+        this.hitRule = hitRule;
         Board board = new Board();
 
         redPlayer = new Player("RED", board.getRedPositions());
@@ -60,7 +62,12 @@ public class Game {
 
         String start = currentPlayer.toString();
 
-        currentPlayer.advance(roll, endRule);
+        Player opponent = currentPlayer == redPlayer ? bluePlayer : redPlayer;
+        // A player at Home does not occupy a board square. In particular, the
+        // blue player's Home coordinate (25) is also Red's finishing square.
+        int opponentIndex = opponent.isHome() ? -1 : opponent.getPosition();
+
+        currentPlayer.advance(roll, endRule, hitRule, opponentIndex);
 
         System.out.printf("%s rolls %d%n", currentPlayer.getColour(), roll);
 

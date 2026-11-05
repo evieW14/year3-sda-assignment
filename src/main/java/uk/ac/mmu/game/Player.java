@@ -35,8 +35,12 @@ public class Player {
         turnCount++;
     }
 
-    public void advance(int spaces, EndRule endRule) {
-        currentIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
+    public void advance(int spaces, EndRule endRule, HitRule hitRule, int opponentIndex) {
+        int destinationIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
+        int destinationPosition = positions[destinationIndex];
+        if (hitRule.canMove(destinationPosition, opponentIndex)) {
+            currentIndex = destinationIndex;
+        }
     }
 
     public String getColour() {

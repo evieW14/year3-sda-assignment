@@ -14,22 +14,42 @@ public class GameApplication {
 
         NormalEnd normalEnd = new NormalEnd();
         ExactEnd exactEnd = new ExactEnd();
+        SpaceCollide spaceCollide = new SpaceCollide();
+        SpaceShare spaceShare = new SpaceShare();
 
-        // Real play, random dice
-        Game randomGame = new Game(new RandomDice(new Random(), 1), exactEnd);
-        randomGame.play();
+        System.out.println("\n========== RANDOM DICE DEMOS ==========");
 
-        // Real play, 2 random dice
-        Game randomDoubleGame = new Game(new RandomDice(new Random(), 2), normalEnd);
-        randomDoubleGame.play();
+        // Random, one die: Exact End + Space Share
+        runGame("Random | 1 die | Exact End | Space Share", new Game(new RandomDice(new Random(), 1), exactEnd, spaceShare));
 
-        // Repeatable game, fixed dice
-        Game fixedGame = new Game(new FixedSequenceDice(List.of(12, 10, 12)), normalEnd);
-        fixedGame.play();
+        // Random, two dice: Normal End + Space Collide
+        runGame("Random | 2 dice | Normal End | Space Collide", new Game(new RandomDice(new Random(), 2), normalEnd, spaceCollide));
 
-        // 2nd Repeatable game, fixed dice
-        Game secondFixedGame = new Game(new FixedSequenceDice(List.of(6, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), exactEnd);
-        secondFixedGame.play();
+        System.out.println("\n========== FIXED RULE DEMOS ==========");
+
+        // These rolls make Red and Blue both attempt to land on position 13.
+        // Under SpaceShare they can share the square; under SpaceCollide Blue stays at Home.
+        List<Integer> collisionRolls = List.of(12, 12, 6, 6, 6);
+
+        runGame("Fixed | Normal End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceShare));
+
+        runGame("Fixed | Normal End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), normalEnd, spaceCollide));
+
+        runGame("Fixed | Exact End | Space Share | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceShare));
+
+        runGame("Fixed | Exact End | Space Collide | Collision scenario", new Game(new FixedSequenceDice(collisionRolls), exactEnd, spaceCollide));
+
+        // The roll on turn 17 makes Red overshoot from position 24.
+        // Normal End wins by overshooting; Exact End bounces back and continues.
+        List<Integer> overshootRolls = List.of(6, 1, 6, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+        runGame("Fixed | Normal End | Space Share | Overshoot scenario", new Game(new FixedSequenceDice(overshootRolls), normalEnd, spaceShare));
+
+        runGame("Fixed | Exact End | Space Share | Bounce-back scenario", new Game(new FixedSequenceDice(overshootRolls), exactEnd, spaceShare));
     }
 
+    private static void runGame(String label, Game game) {
+        System.out.printf("\n\n========== %s ==========%n", label);
+        game.play();
+    }
 }
