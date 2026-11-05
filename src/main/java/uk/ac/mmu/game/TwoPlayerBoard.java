@@ -1,5 +1,8 @@
 package uk.ac.mmu.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TwoPlayerBoard implements Board {
     private static final int END_INDEX = 24;
 
@@ -25,5 +28,15 @@ public class TwoPlayerBoard implements Board {
     @Override
     public int getEndIndex() {
         return END_INDEX;
+    }
+
+    @Override
+    public List<PlayerSetup> getPlayerSetups() {
+        PlayerSetup red = new PlayerSetup("RED", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25});
+        PlayerSetup blue = new PlayerSetup("BLUE", new int[]{25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1});
+        List<PlayerSetup> setup = new ArrayList<>();
+        setup.add(red);
+        setup.add(blue);
+        return setup;
     }
 }

@@ -23,6 +23,7 @@ public class Game {
         this.board = board;
 
 
+        //TODO: Remove this, have a single function to iterate over players setup list
         Player redPlayer = new Player("RED", board.getRedPositions(), board.getHomeIndex(), board.getEndIndex());
         Player bluePlayer = new Player("BLUE", board.getBluePositions(), board.getHomeIndex(), board.getEndIndex());
         players.add(redPlayer);
