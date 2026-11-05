@@ -8,13 +8,15 @@ public class Game {
     private final Player bluePlayer;
     private final EndRule endRule;
     private final HitRule hitRule;
+    private final WormholeRule wormholeRule;
     private Player currentPlayer;
     private int totalTurns = 0;
 
-    public Game(DiceRoller dice, EndRule endRule, HitRule hitRule) {
+    public Game(DiceRoller dice, EndRule endRule, HitRule hitRule, WormholeRule wormholeRule) {
         this.dice = dice;
         this.endRule = endRule;
         this.hitRule = hitRule;
+        this.wormholeRule = wormholeRule;
         Board board = new Board();
 
         redPlayer = new Player("RED", board.getRedPositions());
@@ -65,9 +67,9 @@ public class Game {
         Player opponent = currentPlayer == redPlayer ? bluePlayer : redPlayer;
         // A player at Home does not occupy a board square. In particular, the
         // blue player's Home coordinate (25) is also Red's finishing square.
-        int opponentIndex = opponent.isHome() ? -1 : opponent.getPosition();
+        int opponentPosition = opponent.isHome() ? -1 : opponent.getPosition();
 
-        currentPlayer.advance(roll, endRule, hitRule, opponentIndex);
+        currentPlayer.advance(roll, endRule, hitRule, opponentPosition, wormholeRule);
 
         System.out.printf("%s rolls %d%n", currentPlayer.getColour(), roll);
 
