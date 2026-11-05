@@ -35,12 +35,26 @@ public class Player {
         turnCount++;
     }
 
-    public void advance(int spaces, EndRule endRule, HitRule hitRule, int opponentIndex) {
+    public void advance(int spaces, EndRule endRule, HitRule hitRule, int opponentPosition, WormholeRule wormholeRule) {
         int destinationIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
-        int destinationPosition = positions[destinationIndex];
-        if (hitRule.canMove(destinationPosition, opponentIndex)) {
-            currentIndex = destinationIndex;
+
+        // WormholeRule and HitRule use BoardPositions as these are shared
+        // Indexes are different for players as they have their own sequence of the board.
+        int destinationPosition = wormholeRule.teleportToIndex(positions[destinationIndex]);
+
+        if (hitRule.canMove(destinationPosition, opponentPosition)) {
+            // currentIndex is an index so need to convert destinationPosition to its index
+            currentIndex = getIndexOfPosition(destinationPosition);
         }
+    }
+
+    private int getIndexOfPosition(int boardPosition) {
+        for (int index = 0; index < positions.length; index++) {
+            if (positions[index] == boardPosition) {
+                return index;
+            }
+        }
+        throw new IllegalArgumentException("Position is not on this player's track");
     }
 
     public String getColour() {
