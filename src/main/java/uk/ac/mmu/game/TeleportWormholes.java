@@ -12,9 +12,7 @@ public class TeleportWormholes implements WormholeRule {
     }
 
     public void validateWormholes(Board board) {
-        int[] forbiddenPositions = board instanceof TwoPlayerBoard
-                ? new int[]{1, 25}
-                : new int[]{1, 6, 31, 36};
+        int[] forbiddenPositions = board instanceof TwoPlayerBoard ? new int[]{1, 25} : new int[]{1, 6, 31, 36};
 
         int boardPositionCount = board.getRedPositions().length;
 
