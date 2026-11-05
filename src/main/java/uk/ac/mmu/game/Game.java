@@ -6,13 +6,13 @@ public class Game {
     private final DiceRoller dice;
     private final Player redPlayer;
     private final Player bluePlayer;
-
+    private final EndRule endRule;
     private Player currentPlayer;
-
     private int totalTurns = 0;
 
-    public Game(DiceRoller dice) {
+    public Game(DiceRoller dice, EndRule endRule) {
         this.dice = dice;
+        this.endRule = endRule;
         Board board = new Board();
 
         redPlayer = new Player("RED", board.getRedPositions());
@@ -60,7 +60,7 @@ public class Game {
 
         String start = currentPlayer.toString();
 
-        currentPlayer.advance(roll);
+        currentPlayer.advance(roll, endRule);
 
         System.out.printf("%s rolls %d%n", currentPlayer.getColour(), roll);
 

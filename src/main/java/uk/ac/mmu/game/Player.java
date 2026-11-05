@@ -35,12 +35,8 @@ public class Player {
         turnCount++;
     }
 
-    public void advance(int spaces) {
-        currentIndex += spaces;
-
-        if (currentIndex > END_INDEX) {
-            currentIndex = END_INDEX;
-        }
+    public void advance(int spaces, EndRule endRule) {
+        currentIndex = endRule.destinationIndex(currentIndex, spaces, END_INDEX);
     }
 
     public String getColour() {
